@@ -29,7 +29,7 @@ public class PersonasController {
 	@Autowired
 	PersonasRepository personasRepository;
 
-	@GetMapping("/personsas")
+	@GetMapping("/personas_all")
 	public ResponseEntity<List<PersonasModel>> getAllpersonass(@RequestParam(required = false) String title) {
 		try {
 			List<PersonasModel> personass = new ArrayList<PersonasModel>();
@@ -49,7 +49,7 @@ public class PersonasController {
 		}
 	}
 
-	@GetMapping("/personas/{id}")
+	@GetMapping("/persona/{id}")
 	public ResponseEntity<PersonasModel> getpersonasById(@PathVariable("id") long id) {
 		Optional<PersonasModel> personasData = personasRepository.findById(id);
 
@@ -60,7 +60,7 @@ public class PersonasController {
 		}
 	}
 
-	@PostMapping("/personas")
+	@PostMapping("/personas_create")
 	public ResponseEntity<PersonasModel> createpersonas(@RequestBody PersonasModel personas) {
 		try {
 			PersonasModel _personas = personasRepository
@@ -71,7 +71,7 @@ public class PersonasController {
 		}
 	}
 
-	@PutMapping("/personas/{id}")
+	@PutMapping("/persona_update/{id}")
 	public ResponseEntity<PersonasModel> updatepersonas(@PathVariable("id") long id,
 			@RequestBody PersonasModel personas) {
 		Optional<PersonasModel> personasData = personasRepository.findById(id);
@@ -87,7 +87,7 @@ public class PersonasController {
 		}
 	}
 
-	@DeleteMapping("/personass/{id}")
+	@DeleteMapping("/persona_delete/{id}")
 	public ResponseEntity<HttpStatus> deletepersonas(@PathVariable("id") long id) {
 		try {
 			personasRepository.deleteById(id);
@@ -97,7 +97,7 @@ public class PersonasController {
 		}
 	}
 
-	@DeleteMapping("/personas")
+	@DeleteMapping("/personas_delete_all")
 	public ResponseEntity<HttpStatus> deleteAllpersonass() {
 		try {
 			personasRepository.deleteAll();
