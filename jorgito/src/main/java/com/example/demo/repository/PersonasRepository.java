@@ -8,7 +8,5 @@ import com.example.demo.model.PersonasModel;
 
 public interface PersonasRepository extends JpaRepository<PersonasModel, Long> {
 	List<PersonasModel> findByDni(String dni);
-
 	List<PersonasModel> findByApellido(String apellido);
-
 }

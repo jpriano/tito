@@ -29,21 +29,20 @@ public class PersonasController {
 	@Autowired
 	PersonasRepository personasRepository;
 
-	@GetMapping("/personas_all")
-	public ResponseEntity<List<PersonasModel>> getAllpersonass(@RequestParam(required = false) String title) {
+	@GetMapping("/personas_apellido")
+	public ResponseEntity<List<PersonasModel>> getPersonasByApellido(@RequestParam(required = false) String apellido) {
 		try {
-			List<PersonasModel> personass = new ArrayList<PersonasModel>();
-
-			if (title == null)
-				personasRepository.findAll().forEach(personass::add);
+			List<PersonasModel> personasList = new ArrayList<PersonasModel>();
+			if (apellido == null)
+				personasRepository.findAll().forEach(personasList::add);
 			else
-				personasRepository.findByApellido(title).forEach(personass::add);
+				personasRepository.findByApellido(apellido).forEach(personasList::add);
 
-			if (personass.isEmpty()) {
+			if (personasList.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
-			return new ResponseEntity<>(personass, HttpStatus.OK);
+			return new ResponseEntity<>(personasList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -60,8 +59,8 @@ public class PersonasController {
 		}
 	}
 
-	@PostMapping("/personas_create")
-	public ResponseEntity<PersonasModel> createpersonas(@RequestBody PersonasModel personas) {
+	@PostMapping("/persona_create")
+	public ResponseEntity<PersonasModel> createpersona(@RequestBody PersonasModel personas) {
 		try {
 			PersonasModel _personas = personasRepository
 					.save(new PersonasModel(personas.getDni(), personas.getNombre(), personas.getApellido()));
@@ -108,15 +107,15 @@ public class PersonasController {
 
 	}
 
-	@GetMapping("/personas/todas")
+	@GetMapping("/personas/{dni}")
 	public ResponseEntity<List<PersonasModel>> findByPublished() {
 		try {
-			List<PersonasModel> personass = personasRepository.findByDni("13211994");
+			List<PersonasModel> personas = personasRepository.findByDni("13211994");
 
-			if (personass.isEmpty()) {
+			if (personas.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
-			return new ResponseEntity<>(personass, HttpStatus.OK);
+			return new ResponseEntity<>(personas, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
